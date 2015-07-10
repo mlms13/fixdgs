@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
+    jeet = require('jeet'),
     stylus = require('gulp-stylus'),
     prefix = require('gulp-autoprefixer'),
     nodeStatic = require('node-static'),
@@ -15,6 +16,17 @@ var gulp = require('gulp'),
         html: {
           all: ['./src-frameless/index.html'],
           dest: './public/frameless'
+        }
+      },
+      jeet: {
+        stylus: {
+          main: './src-jeet/styl/index.styl',
+          all: ['./src-jeet/styl/**/*.styl'],
+          dest: './public/jeet/css'
+        },
+        html: {
+          all: ['./src-jeet/index.html'],
+          dest: './public/jeet'
         }
       },
       dest: './public'
@@ -33,12 +45,29 @@ gulp.task('frameless:stylus', function () {
     .pipe(gulp.dest(paths.frameless.stylus.dest));
 });
 
-gulp.task('build', ['frameless:html', 'frameless:stylus']);
+// Jeet
+gulp.task('jeet:html', function () {
+  return gulp.src(paths.jeet.html.all)
+    .pipe(gulp.dest(paths.jeet.html.dest));
+});
+
+gulp.task('jeet:stylus', function () {
+  return gulp.src(paths.jeet.stylus.main)
+    .pipe(stylus({ use: jeet() }))
+    .pipe(prefix())
+    .pipe(gulp.dest(paths.jeet.stylus.dest));
+});
+
+gulp.task('build', ['frameless:html', 'frameless:stylus', 'jeet:html', 'jeet:stylus']);
 
 gulp.task('watch', ['build'], function () {
   // Frameless
   gulp.watch(paths.frameless.html.all, ['frameless:html']);
   gulp.watch(paths.frameless.stylus.all, ['frameless:stylus']);
+
+  // Jeet
+  gulp.watch(paths.jeet.html.all, ['jeet:html']);
+  gulp.watch(paths.jeet.stylus.all, ['jeet:stylus']);
 });
 
 gulp.task('serve', ['watch'], function (cb) {

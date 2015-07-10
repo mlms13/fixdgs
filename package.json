@@ -14,5 +14,8 @@
     "gulp-stylus": "^2.0.5",
     "gulp-util": "^3.0.6",
     "node-static": "^0.7.6"
+  },
+  "dependencies": {
+    "jeet": "^6.1.2"
   }
 }
