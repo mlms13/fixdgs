@@ -29,6 +29,17 @@ var gulp = require('gulp'),
           dest: './public/jeet'
         }
       },
+      flexbox: {
+        stylus: {
+          main: './src-flexbox/styl/index.styl',
+          all: ['./src-flexbox/styl/**/*.styl'],
+          dest: './public/flexbox/css'
+        },
+        html: {
+          all: ['./src-flexbox/index.html'],
+          dest: './public/flexbox'
+        }
+      },
       dest: './public'
     };
 
@@ -58,7 +69,20 @@ gulp.task('jeet:stylus', function () {
     .pipe(gulp.dest(paths.jeet.stylus.dest));
 });
 
-gulp.task('build', ['frameless:html', 'frameless:stylus', 'jeet:html', 'jeet:stylus']);
+// Flexbox
+gulp.task('flexbox:html', function () {
+  return gulp.src(paths.flexbox.html.all)
+    .pipe(gulp.dest(paths.flexbox.html.dest));
+});
+
+gulp.task('flexbox:stylus', function () {
+  return gulp.src(paths.flexbox.stylus.main)
+    .pipe(stylus())
+    .pipe(prefix())
+    .pipe(gulp.dest(paths.flexbox.stylus.dest));
+});
+
+gulp.task('build', ['frameless:html', 'frameless:stylus', 'jeet:html', 'jeet:stylus', 'flexbox:html', 'flexbox:stylus']);
 
 gulp.task('watch', ['build'], function () {
   // Frameless
@@ -68,6 +92,10 @@ gulp.task('watch', ['build'], function () {
   // Jeet
   gulp.watch(paths.jeet.html.all, ['jeet:html']);
   gulp.watch(paths.jeet.stylus.all, ['jeet:stylus']);
+
+  // Flexbox
+  gulp.watch(paths.flexbox.html.all, ['flexbox:html']);
+  gulp.watch(paths.flexbox.stylus.all, ['flexbox:stylus']);
 });
 
 gulp.task('serve', ['watch'], function (cb) {

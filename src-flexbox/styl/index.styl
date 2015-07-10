@@ -1,0 +1,58 @@
+// Set up the grid
+$column = 50px
+$gutter = 30px
+
+// get column width in ems
+cols($cols = 1)
+  $cols * ($column + $gutter)
+
+// actual styles
+body
+  background #eee
+  margin 20px
+
+ul
+  background white
+  list-style none
+  margin 0 auto
+  padding 0
+
+.row
+  display flex
+  flex-flow row wrap
+  justify-content space-around
+
+.container
+  margin-left auto
+  margin-right auto
+  margin-bottom 20px
+  width cols(4)
+
+  @media screen and (min-width: cols(8))
+    width cols(8)
+
+  @media screen and (min-width: cols(12))
+    width cols(12)
+
+  @media screen and (min-width: cols(16))
+    width cols(16)
+
+.container input
+  box-sizing border-box
+  display block
+  padding 10px
+  width 100%
+
+li
+  background #ddd
+  height 40px
+  margin-top 5px
+  margin-bottom 5px
+  width (cols(4) - $gutter)
+
+
+  &:first-child
+    div
+      background #0ad
+      height 40px
+      width (cols(1) - $gutter)
