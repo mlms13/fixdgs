@@ -1,47 +1,78 @@
+// mixins, pretend this is a library
+cf()
+  zoom 1
+  &:after
+  &:before
+    content ""
+    display table
+  &:after
+    clear both
+
+colWidth($count, $outerGutter = true)
+  if $outerGutter
+    $count * ($column + $gutter)
+  else
+    $count * ($column + $gutter) - $gutter
+
+col($count, $column, $gutter, $outerGutter = true)
+  float left
+  width colWidth($count, false)
+
+  if $outerGutter
+    margin-left ($gutter / 2)
+    margin-right ($gutter / 2)
+  else
+    margin-left $gutter
+
+    &:first-of-type
+      margin-left 0
+
+center()
+  margin-left auto
+  margin-right auto
+
+row($colCount)
+  box-sizing border-box
+  cf()
+
+  if $colCount
+    width colWidth($colCount)
+
 // Set up the grid
-
-$baseFontSize = 16
-$em = $baseFontSize * 1em
-$column = 50
-$gutter = 30
-
-// get column width in ems
-cols($cols = 1)
-  $cols * ($column + $gutter) / $em
-
-gutterlessCols($cols = 1)
-  ($cols * ($column + $gutter) - $gutter) / $em
-
+$column = 50px
+$gutter = 30px
 
 // actual styles
 body
   background #eee
-  margin 20px
+  margin 20px 0
 
 ul
   background white
   list-style none
-  margin 0 auto
+  margin 0 auto 20px
   padding 0
 
 .container
-  clear both
-  margin-left auto
-  margin-right auto
   margin-bottom 20px
-  overflow hidden
-  width cols(4)
+  center()
+  row(4)
 
-  @media screen and (min-width: cols(8))
-    width cols(8)
+  @media screen and (min-width: colWidth(8))
+    row(8)
 
-  @media screen and (min-width: cols(12))
-    width cols(12)
+  @media screen and (min-width: colWidth(12))
+    row(12)
 
-  @media screen and (min-width: cols(16))
-    width cols(16)
+  @media screen and (min-width: colWidth(16))
+    row(16)
 
-.container input
+.padded-container
+  @extend .container
+  padding-left ($gutter / 2)
+  padding-right ($gutter / 2)
+
+.padded-container input
   box-sizing border-box
   display block
   padding 10px
@@ -50,18 +81,13 @@ ul
 li
   background #ddd
   height 40px
-  float left
-  margin 5px ($gutter / 2 / $em)
-  width gutterlessCols(4)
+  margin-bottom 5px
+  col(4, $column, $gutter)
 
-
+  &:nth-child(8)
+    col(8, $column, $gutter)
   &:first-child
     div
       background #0ad
-      float left
       height 40px
-      margin-left ($gutter / $em)
-      width gutterlessCols(1)
-
-      &:first-child
-        margin-left 0
+      col(1, $column, $gutter, false)
