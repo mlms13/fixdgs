@@ -1,0 +1,67 @@
+// Set up the grid
+
+$baseFontSize = 16
+$em = $baseFontSize * 1em
+$column = 50
+$gutter = 30
+
+// get column width in ems
+cols($cols = 1)
+  $cols * ($column + $gutter) / $em
+
+gutterlessCols($cols = 1)
+  ($cols * ($column + $gutter) - $gutter) / $em
+
+
+// actual styles
+body
+  background #eee
+  margin 20px
+
+ul
+  background white
+  list-style none
+  margin 0 auto
+  padding 0
+
+.container
+  clear both
+  margin-left auto
+  margin-right auto
+  margin-bottom 20px
+  overflow hidden
+  width cols(4)
+
+  @media screen and (min-width: cols(8))
+    width cols(8)
+
+  @media screen and (min-width: cols(12))
+    width cols(12)
+
+  @media screen and (min-width: cols(16))
+    width cols(16)
+
+.container input
+  box-sizing border-box
+  display block
+  padding 10px
+  width 100%
+
+li
+  background #ddd
+  height 40px
+  float left
+  margin 5px ($gutter / 2 / $em)
+  width gutterlessCols(4)
+
+
+  &:first-child
+    div
+      background #0ad
+      float left
+      height 40px
+      margin-left ($gutter / $em)
+      width gutterlessCols(1)
+
+      &:first-child
+        margin-left 0

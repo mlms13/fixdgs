@@ -1,0 +1,18 @@
+{
+  "name": "frameless-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Martin-Smucker",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-stylus": "^2.0.5",
+    "gulp-util": "^3.0.6",
+    "node-static": "^0.7.6"
+  }
+}
